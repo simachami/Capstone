@@ -4,7 +4,7 @@ certifi==2023.7.22
 charset-normalizer==3.2.0
 click==8.1.6
 colorama==0.4.6
-Flask==2.3.2
+Flask==2.2.5
 Flask-Cors==4.0.0
 Flask-JWT-Extended==4.5.2
 Flask-Login==0.6.2
@@ -23,10 +23,10 @@ packaging==23.1
 pampy==0.3.0
 psycopg2==2.9.6
 PyJWT==2.8.0
-python-dotenv==1.0.0
+python-dotenv==0.21.1
 requests==2.31.0
 SQLAlchemy==2.0.19
 typing_extensions==4.7.1
 urllib3==2.0.4
-Werkzeug==2.3.6
+Werkzeug==2.2.3
 WTForms==3.0.1

@@ -3,13 +3,13 @@
 <div id="results" class="row">
     {% for recipe in recipes %}
     <div class="col-md-4 mb-4">
-        <div class="card" style="width: 18rem;">
+        <div class="card border-light h-100"> 
             {% if recipe.image_url %}
             <img src="{{ recipe.image_url }}" alt="Recipe Image" class="card-img-top">
-            <div class="card-body">
+            <div class="card-body text-bg-dark d-flex flex-column"> 
                 <h5 class="card-title">{{ recipe.title }}</h5>
-                <p class="card-text">{{ recipe.summary }}</p>
-                <a href="{{ recipe.source_url }}" class="btn btn-primary">Read Full Recipe</a>
+                <p class="card-text">{{ recipe.summary[:100] }}{% if recipe.summary|length > 50 %}...{% endif %}</p>
+                <a href="{{ recipe.source_url }}" class="btn btn-primary mt-auto">Read Full Recipe</a> 
             </div>
             {% else %}
                 <div class="card-body">

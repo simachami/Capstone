@@ -8,7 +8,9 @@
             <img src="{{ recipe.image_url }}" alt="Recipe Image" class="card-img-top">
             <div class="card-body text-bg-dark d-flex flex-column"> 
                 <h5 class="card-title">{{ recipe.title }}</h5>
-                <p class="card-text">{{ recipe.summary[:100] }}{% if recipe.summary|length > 50 %}...{% endif %}</p>
+                <p class="card-text">Ready in {{recipe.readyInMinutes}} Minutes</p>
+                <p class="card-text">Servings: {{recipe.servings}}</p>
+                {# <p class="card-text">{{ recipe.summary[:100] }}{% if recipe.summary|length > 50 %}...{% endif %}</p> #}
                 <a href="{{ recipe.source_url }}" class="btn btn-primary mt-auto">Read Full Recipe</a> 
             </div>
             {% else %}

@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 
 class AllRecipes():
-    all_recipes_ids = ['654959', '511728', '654883', '654928', '654944', '654913', '634698', '75081', '715567', '634618', '634559', '634629', '637876', '638420', '638308', '638174', '638125', '638257', '662271', '636736', '648247', '653008', '1697787', '652330', '664658', '664689', '664663', '664699', '664650', '664697', '664472', '1095748', '1096306', '664396', '664419', '1095996']
+    all_recipes_ids_list = ['654959', '511728', '654883', '654928', '654944', '654913', '634698', '75081', '715567', '634618', '634559', '634629', '637876', '638420', '638308', '638174', '638125', '638257', '662271', '636736', '648247', '653008', '1697787', '652330', '664658', '664689', '664663', '664699', '664650', '664697', '664472', '1095748', '1096306', '664396', '664419', '1095996', '657295', '641537', '641445', '649390', '1095795', '642471']
 
 class PastaRecipes():
     pasta_recipe_ids_list = ['654959', '511728', '654883', '654928', '654944', '654913']
@@ -23,11 +23,14 @@ class VeggieRecipes():
 class VeganRecipes():
     vegan_recipe_ids_list = ['664472', '1095748', '1096306', '664396', '664419', '1095996']
 
-class RecipeForm(FlaskForm):
-    title = 'Temp Title'
-    summary = 'temp summary'
-    input_text = StringField('Input:', validators=[ DataRequired()])
-    submit = SubmitField('Get Recipe')
+class DessertRecipes():
+    dessert_recipe_ids_list = ['657295', '641537', '641445', '649390', '1095795', '642471']
+
+# class RecipeForm(FlaskForm):
+#     title = 'Temp Title'
+#     summary = 'temp summary'
+#     input_text = StringField('Input:', validators=[ DataRequired()])
+#     submit = SubmitField('Get Recipe')
 
 class LoginForm(FlaskForm):
     email = StringField('Email:', validators=[ DataRequired()])

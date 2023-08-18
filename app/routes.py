@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user
 from app import app
 from requests import get
 import requests
-from app.forms import LoginForm, SignUpForm, AllRecipes, PastaRecipes, BeefRecipes, ChickenRecipes, SeafoodRecipes, VeggieRecipes, VeganRecipes
+from app.forms import LoginForm, SignUpForm, AllRecipes, PastaRecipes, BeefRecipes, ChickenRecipes, SeafoodRecipes, VeggieRecipes, VeganRecipes, DessertRecipes
 from app.models import User
 
 
@@ -38,32 +38,24 @@ def get_recipe_details():
 #All recipes api call
 @app.route('/recipes')
 def get_all_recipes():
-    
     all_recipe_json_list = []
     recipe_list = AllRecipes()
-    for recipe_id in recipe_list.all_recipes_ids:
+    for recipe_id in recipe_list.all_recipes_ids_list:
         url = f"https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={app.config.get('API_KEY')}"
         response = requests.get(url)
+        
         if response.status_code == 200:
             data = response.json()
             recipe_data = {
                 'title': data.get('title', ''),
                 'summary': data.get('summary', ''),
-                'image_url': data.get('image', '')
+                'readyInMinutes': data.get('readyInMinutes', ''),
+                'servings': data.get('servings', ''),
+                'image_url': data.get('image', ''),
+                'source_url': data.get('sourceUrl', '')
             }
             all_recipe_json_list.append(recipe_data)
-
-    # menu_selection = request.args.get('query')
-    # print(menu_selection)
-    # if menu_selection == 'beef': 
-    #     #redirect('/recipes/beef')
-    #     return render_template('beef.jinja', recipes=all_recipe_json_list)
-    # elif menu_selection == 'pasta':
-    #     return render_template('pasta.jinja', recipes=all_recipe_json_list)
-    # elif menu_selection == 'chicken':
-    #     return render_template('chicken.jinja', recipes=all_recipe_json_list)
-    # else:
-        return render_template('recipes.jinja', recipes=all_recipe_json_list)
+    return render_template('pasta.jinja', recipes=all_recipe_json_list)
     
     
 
@@ -109,7 +101,7 @@ def get_beef_recipes():
                 'image_url': data.get('image', '')
             }
             beef_recipe_json_list.append(recipe_data)
-    return render_template('pasta.jinja', recipes=beef_recipe_json_list)
+    return render_template('beef.jinja', recipes=beef_recipe_json_list)
 
 
 
@@ -130,7 +122,7 @@ def get_chicken_recipes():
                 'image_url': data.get('image', '')
             }
             chicken_recipe_json_list.append(recipe_data)
-    return render_template('pasta.jinja', recipes=chicken_recipe_json_list)
+    return render_template('chicken.jinja', recipes=chicken_recipe_json_list)
 
 
 #Seafood API Calls
@@ -149,7 +141,7 @@ def get_seafood_recipes():
                 'image_url': data.get('image', '')
             }
             seafood_recipe_json_list.append(recipe_data)
-    return render_template('pasta.jinja', recipes=seafood_recipe_json_list)
+    return render_template('seafood.jinja', recipes=seafood_recipe_json_list)
 
 
 #vegetarian API Calls
@@ -165,10 +157,11 @@ def get_veggie_recipes():
             recipe_data = {
                 'title': data.get('title', ''),
                 'readyInMinutes': data.get('readyInMinutes', ''),
+                'summary': data.get('summary', ''),
                 'image_url': data.get('image', '')
             }
             veggie_recipe_json_list.append(recipe_data)
-    return render_template('pasta.jinja', recipes=veggie_recipe_json_list)
+    return render_template('veggie.jinja', recipes=veggie_recipe_json_list)
 
 #vegetarian API Calls
 @app.route('/recipes/vegan')
@@ -186,7 +179,29 @@ def get_vegan_recipes():
                 'image_url': data.get('image', '')
             }
             vegan_recipe_json_list.append(recipe_data)
-    return render_template('pasta.jinja', recipes=vegan_recipe_json_list)
+    return render_template('vegan.jinja', recipes=vegan_recipe_json_list)
+
+#Dessert API Calls
+@app.route('/recipes/dessert')
+def get_dessert_recipes():
+    dessert_recipe_json_list = []
+    recipe_list = DessertRecipes()
+    for recipe_id in recipe_list.dessert_recipe_ids_list:
+        url = f"https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={app.config.get('API_KEY')}"
+        response = requests.get(url)
+        
+        if response.status_code == 200:
+            data = response.json()
+            recipe_data = {
+                'title': data.get('title', ''),
+                'summary': data.get('summary', ''),
+                'readyInMinutes': data.get('readyInMinutes', ''),
+                'servings': data.get('servings', ''),
+                'image_url': data.get('image', ''),
+                'source_url': data.get('sourceUrl', '')
+            }
+            dessert_recipe_json_list.append(recipe_data)
+    return render_template('dessert.jinja', recipes=dessert_recipe_json_list)
 
 
 
@@ -204,11 +219,10 @@ def sign_in():
     return render_template('signin.jinja', form=signin_form)
 
 
-
-# @app.route('/logout')
-# def logout():
-#     logout_user()
-#     return redirect(/sign))
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('auth.signin'))
 
 @app.route('/signup', methods=['Get', 'POST'])
 def sign_up():
@@ -229,18 +243,8 @@ def sign_up():
     return render_template('signup.jinja', form=signup_form)
 
 
-# @app.route('/signin')
-# def sign_in():
-#     login_form = LoginForm()
-#     return render_template('signin.jinja', form=login_form)
 
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('auth.signin'))
 
-# @app.route('/signup')
-# def sign_up():
-#     signup_form = SignUpForm()
-#     return render_template('signup.jinja', form=signup_form)
+
+

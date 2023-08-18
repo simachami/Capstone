@@ -22,6 +22,10 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def from_dict(self, user_obj):
+        for attribute, v in user_obj.items():
+            setattr(self, attribute, v)
+
     def get_id(self):
         return str(self.user_id)
 

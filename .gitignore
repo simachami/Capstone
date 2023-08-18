@@ -1,0 +1,4 @@
+taste_of_home_venv/
+.env
+_pycache__/
+migrations/

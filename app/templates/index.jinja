@@ -1,0 +1,40 @@
+{% extends "base.jinja" %}
+{% block content %}
+<style>
+    .background-image {
+        background-image: url('/static/background.jpg'); 
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
+<div class="container-fluid main-container background-image">
+    <div class="jumbotron text-center bg-transparent py-5 mb-0">
+        <h1 class="display-4 text-white">Welcome to Taste of Home</h1>
+        <p class="lead text-white">Discover a world of delicious recipes and cooking inspiration.</p>
+    </div>
+
+    <div class="row justify-content-center my-4">
+        <div class="col-md-6">
+            <form action="/recipes" method="GET" class="d-flex">
+                <select class="form-control me-2" name="query">
+                    <option value="" selected>Select Recipe Type</option>
+                    <option value="beef">Beef</option>
+                    <option value="chicken">Chicken</option>
+                    <option value="pasta">Pasta</option>
+                </select>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="mb-4">Discover More</h2>
+            <p>Explore the latest recipes, cooking tips, and more!</p>
+            <a href="/recipes" class="btn btn-primary btn-lg">Browse All Recipes</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

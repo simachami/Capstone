@@ -1,6 +1,6 @@
 {% extends "base.jinja" %}
 {% block content %}
-<div class="container-fluid main-container background-image">
+<div class="container-fluid main-container" >
     <div class="jumbotron text-center bg-transparent py-5 mb-0">
         <h1 class="display-4 text-white">Welcome to Taste of Home</h1>
         <p class="lead text-white">Discover a world of delicious recipes and cooking inspiration.</p>
@@ -14,6 +14,9 @@
                     <option value="beef">Beef</option>
                     <option value="chicken">Chicken</option>
                     <option value="pasta">Pasta</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="dessert">Dessert</option>
                 </select>
                 <button class="btn btn-primary" type="submit">Search</button>
             </form>
@@ -28,4 +31,13 @@
         </div>
     </div>
 </div>
+
+
+{# {% block footer %}
+<footer class="footer text-center">
+    <div class="container">
+        <p>&copy; {{ current_year }} Taste of Home. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock footer %} #}
 {% endblock content %}

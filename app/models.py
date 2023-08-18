@@ -1,6 +1,7 @@
-from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 from flask_login import UserMixin
+from app import db, login_manager
 
 @login_manager.user_loader
 def load_user(id):
@@ -34,3 +35,18 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+
+# class Recipes(db.Model):
+#     recipe_id = db.Column(db.Integer, primary_key = True)
+#     body = db.Column(db.String(), nullable = False)
+#     timestamp = db.Column(db.Datetime, default=datetime.utcnow)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+
+#     def __repr__(self):
+#         return f'<Recipe: {self.body}>'
+    
+
+#     def commit(self):
+#         db.session.add(self)
+#         db.session.commit()

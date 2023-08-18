@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 from app import app
 from requests import get
 import requests
@@ -203,7 +203,9 @@ def get_dessert_recipes():
             dessert_recipe_json_list.append(recipe_data)
     return render_template('dessert.jinja', recipes=dessert_recipe_json_list)
 
-
+def check_active_user():
+    if current_user.is_authenticated:
+        return redirect(url_for(home))
 
 @app.route('/signin', methods=['Get', 'POST'])
 def sign_in():
@@ -212,6 +214,8 @@ def sign_in():
         email = signin_form.email.data
         user = User.query.filter_by(email=email).first()
         if user and user.check_password(signin_form.password.data):
+            login_user(user)
+            print(current_user.username)
             flash(f'{signin_form.email.data} successfully logged in!' ,category='success')
             return redirect('/')
         else:
@@ -220,24 +224,29 @@ def sign_in():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.signin'))
+    return redirect(url_for('sign_in'))
 
 @app.route('/signup', methods=['Get', 'POST'])
 def sign_up():
     signup_form = SignUpForm()
     if signup_form.validate_on_submit():
-        first_name = signup_form.first_name.data
-        last_name = signup_form.last_name.data
-        username = signup_form.username.data
-        email = signup_form.email.data
+        user_info = {
+            'first_name' : signup_form.first_name.data,
+            'last_name' : signup_form.last_name.data,
+            'username' : signup_form.username.data,
+            'email' : signup_form.email.data,
+        }
         try:
-            user = User(first_name=first_name, last_name=last_name, username=username, email=email)
+            user = User()
+            user.from_dict(user_info)
             user.hash_password(signup_form.password.data)
             user.commit()
-            flash(f'{first_name if first_name else username} is registered', category='success')
-            return redirect('/')
+            flash(f'{user.first_name if user.first_name else user.username} registered', category='success')
+            login_user(user)
+            return redirect(url_for('home'))
         except:
             flash(f'Username or Email is already taken. Please try again!', category='alert')
     return render_template('signup.jinja', form=signup_form)
